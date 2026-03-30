@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         webView = WebView(this).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
+            settings.allowUniversalAccessFromFileURLs = true
+            settings.databaseEnabled = true
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient()
             loadUrl("file:///android_asset/index.html")
