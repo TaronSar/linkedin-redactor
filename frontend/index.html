@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LinkedIn Redactor</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0A66C2">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+  <!-- Onboarding Screen -->
+  <div id="onboarding" class="screen">
+    <div class="onboarding-card">
+      <div class="logo">LR</div>
+      <h1>LinkedIn Redactor</h1>
+      <p class="tagline">Turn your achievements into LinkedIn gold</p>
+
+      <div class="why-section">
+        <h2>How it works</h2>
+        <p>This app uses Google's AI to transform a few words about your achievement into a polished LinkedIn post. To keep it <strong>free</strong> and <strong>private</strong>, you connect directly to Google with your own key.</p>
+      </div>
+
+      <div class="benefits">
+        <div class="benefit">
+          <span class="benefit-icon">$0</span>
+          <span>Completely free<br><small>1,500 uses per day</small></span>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">&lt;1m</span>
+          <span>One-time setup<br><small>Takes under a minute</small></span>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">&#x26BF;</span>
+          <span>Private &amp; secure<br><small>Key stays on your device</small></span>
+        </div>
+      </div>
+
+      <div class="setup-steps">
+        <h2>Get your free API key</h2>
+        <ol>
+          <li>
+            <a href="https://aistudio.google.com/apikey" target="_blank" class="step-link">
+              Open Google AI Studio
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </li>
+          <li>Sign in with your Google account</li>
+          <li>Click <strong>"Create API key"</strong> and copy it</li>
+          <li>Paste it below</li>
+        </ol>
+      </div>
+
+      <div class="key-input-group">
+        <input type="password" id="api-key-input" placeholder="Paste your API key here" autocomplete="off" />
+        <button id="start-btn" class="primary-btn">Get Started</button>
+      </div>
+
+      <p class="privacy-note">Your key is stored only on this device and connects directly to Google. We never see or store it.</p>
+    </div>
+  </div>
+
+  <!-- Main App Screen -->
+  <div id="app" class="screen hidden">
+    <div class="container">
+      <header>
+        <h1>LinkedIn Redactor</h1>
+        <p class="subtitle">Turn your achievements into LinkedIn gold</p>
+      </header>
+
+      <main>
+        <label for="achievement">What did you achieve?</label>
+        <textarea
+          id="achievement"
+          rows="4"
+          placeholder="e.g. fixed a bug in our api, got promoted, shipped a new feature, learned Python..."
+        ></textarea>
+
+        <div class="tone-selector">
+          <span class="tone-label">Tone:</span>
+          <div class="tone-toggle">
+            <button class="tone-btn active" data-tone="professional">Professional</button>
+            <button class="tone-btn" data-tone="satirical">Satirical</button>
+          </div>
+        </div>
+
+        <div class="length-selector">
+          <div class="length-header">
+            <span class="length-label">Length:</span>
+            <span id="length-value" class="length-value">Medium</span>
+          </div>
+          <input type="range" id="length-slider" min="1" max="5" value="3" step="1" />
+          <div class="length-ticks">
+            <span>Short</span>
+            <span>Long</span>
+          </div>
+        </div>
+
+        <button id="generate-btn" class="primary-btn">Redact for LinkedIn</button>
+
+        <div id="result" class="result hidden">
+          <div id="output" class="output-card"></div>
+          <button id="copy-btn" class="secondary-btn">Copy to Clipboard</button>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+      </main>
+
+      <button id="settings-btn" class="settings-link">Change API key</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
