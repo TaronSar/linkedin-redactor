@@ -94,10 +94,26 @@ function getApiKey() {
 // --- Gemini API (direct call, no backend) ---
 
 async function callGemini(apiKey, systemPrompt, userMessage) {
-  const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  // Use native Android bridge if available (bypasses WebView CORS issues)
+  if (window.GeminiBridge) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          const result = JSON.parse(GeminiBridge.callGemini(apiKey, systemPrompt, userMessage));
+          if (result.error) reject(new Error(result.error));
+          else resolve(result.text);
+        } catch (e) {
+          reject(e);
+        }
+      }, 50);
+    });
+  }
+
+  // Fetch-based call for Windows / web
+  const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       system_instruction: { parts: [{ text: systemPrompt }] },
       contents: [{ parts: [{ text: userMessage }] }],

@@ -81,7 +81,16 @@
       "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/**)",
       "Bash(pyinstaller linkedin_redactor.spec --distpath /c/temp/lr-dist --workpath ./build --noconfirm)",
       "Bash(rm -rf /c/temp/android-build)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(where adb:*)",
+      "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/$LOCALAPPDATA/Android/Sdk/platform-tools/**)",
+      "Read(//c/Program Files/Android/**)",
+      "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/$LOCALAPPDATA/Programs/**)",
+      "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/$PROGRAMFILES/**)",
+      "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/$LOCALAPPDATA/Android/**)",
+      "Bash(echo \"sdk.dir=C\\\\:\\\\\\\\Users\\\\\\\\trnsr\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Android\\\\\\\\Sdk\")",
+      "Bash(\"C:/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/android/local.properties\")",
+      "Bash(\"$LOCALAPPDATA/Android/Sdk/platform-tools/adb.exe\" devices:*)"
     ]
   }
 }
