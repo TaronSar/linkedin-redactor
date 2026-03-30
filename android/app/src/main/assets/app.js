@@ -55,16 +55,22 @@ const SYSTEM_PROMPTS = {
 // --- API key persistence (file-backed via server, with localStorage fallback) ---
 
 async function loadApiKey() {
-  try {
-    const res = await fetch("/config");
-    if (res.ok) {
-      const data = await res.json();
-      if (data.gemini_api_key) {
-        cachedApiKey = data.gemini_api_key;
-        return;
+  // Try file-backed config (Windows .exe) with retries for server startup
+  for (let i = 0; i < 5; i++) {
+    try {
+      const res = await fetch("/config");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.gemini_api_key) {
+          cachedApiKey = data.gemini_api_key;
+          return;
+        }
+        break; // Server responded but no key saved yet
       }
+    } catch {
+      await new Promise((r) => setTimeout(r, 300)); // Server not ready, retry
     }
-  } catch {}
+  }
   // Fallback to localStorage (Android / standalone)
   cachedApiKey = localStorage.getItem("gemini_api_key") || "";
 }

@@ -3,7 +3,6 @@
 Starts the Flask backend in a background thread and opens the UI in a native window.
 """
 
-import os
 import sys
 import threading
 from pathlib import Path
@@ -26,10 +25,6 @@ def start_server():
 
 
 if __name__ == "__main__":
-    # Persistent storage so localStorage (API key) survives app restarts
-    storage_dir = Path(os.environ.get("APPDATA", Path.home())) / "LinkedInRedactor"
-    storage_dir.mkdir(parents=True, exist_ok=True)
-
     server_thread = threading.Thread(target=start_server, daemon=True)
     server_thread.start()
 
@@ -40,4 +35,4 @@ if __name__ == "__main__":
         height=750,
         min_size=(400, 500),
     )
-    webview.start(storage_path=str(storage_dir))
+    webview.start()

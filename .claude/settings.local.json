@@ -80,7 +80,8 @@
       "Bash(printf '@if \"\"\"\"%%DEBUG%%\"\"\"\"==\"\"\"\"\"\"\"\" @echo off\\\\nset DIRNAME=%%~dp0\\\\nset CLASSPATH=%%DIRNAME%%\\\\\\\\gradle\\\\\\\\wrapper\\\\\\\\gradle-wrapper.jar\\\\n\"\"\"\"%%JAVA_HOME%%\\\\\\\\bin\\\\\\\\java.exe\"\"\"\" -classpath \"\"\"\"%%CLASSPATH%%\"\"\"\" org.gradle.wrapper.GradleWrapperMain %%*\\\\n')",
       "Read(//c/Users/trnsr/OneDrive/Desktop/Apps/linkedin_redactor/**)",
       "Bash(pyinstaller linkedin_redactor.spec --distpath /c/temp/lr-dist --workpath ./build --noconfirm)",
-      "Bash(rm -rf /c/temp/android-build)"
+      "Bash(rm -rf /c/temp/android-build)",
+      "Bash(gh repo:*)"
     ]
   }
 }
