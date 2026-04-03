@@ -16,7 +16,7 @@ app = Flask(__name__, static_folder=None)
 FRONTEND_DIR = BASE_DIR / "frontend"
 
 # Persistent config file for API key (survives app restarts)
-CONFIG_DIR = Path(os.environ.get("APPDATA", Path.home())) / "LinkedInRedactor"
+CONFIG_DIR = Path(os.environ.get("APPDATA", Path.home())) / "LinkedUp"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
 

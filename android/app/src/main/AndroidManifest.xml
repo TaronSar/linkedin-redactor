@@ -6,7 +6,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="LinkedIn Redactor"
+        android:label="LinkedUp"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false">
 

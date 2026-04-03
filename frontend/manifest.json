@@ -1,6 +1,6 @@
 {
-  "name": "LinkedIn Redactor",
-  "short_name": "LI Redactor",
+  "name": "LinkedUp",
+  "short_name": "LinkedUp",
   "description": "Turn your achievements into professional LinkedIn posts",
   "start_url": "/",
   "display": "standalone",

@@ -1,4 +1,4 @@
-"""LinkedIn Redactor - Windows Desktop App
+"""LinkedUp - Windows Desktop App
 
 Starts the Flask backend in a background thread and opens the UI in a native window.
 """
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     server_thread.start()
 
     webview.create_window(
-        "LinkedIn Redactor",
+        "LinkedUp",
         "http://127.0.0.1:5000",
         width=650,
         height=750,

@@ -12,6 +12,7 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,11 +46,13 @@ class MainActivity : AppCompatActivity() {
     inner class GeminiBridge {
         @JavascriptInterface
         fun callGemini(apiKey: String, systemPrompt: String, userMessage: String): String {
+            val cleanKey = apiKey.trim()
+            Log.d("GeminiBridge", "API key length=${cleanKey.length}, prefix=${cleanKey.take(8)}...")
             return try {
-                val url = URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey")
+                val url = URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$cleanKey")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "POST"
-                conn.setRequestProperty("Content-Type", "application/json")
+                conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")
                 conn.doOutput = true
                 conn.connectTimeout = 30000
                 conn.readTimeout = 30000
@@ -63,18 +66,20 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
 
-                val writer = OutputStreamWriter(conn.outputStream)
+                val writer = OutputStreamWriter(conn.outputStream, Charsets.UTF_8)
                 writer.write(body.toString())
                 writer.flush()
                 writer.close()
 
                 val code = conn.responseCode
+                Log.d("GeminiBridge", "Response code: $code")
                 val stream = if (code == 200) conn.inputStream else conn.errorStream
-                val reader = BufferedReader(InputStreamReader(stream))
+                val reader = BufferedReader(InputStreamReader(stream, Charsets.UTF_8))
                 val response = reader.readText()
                 reader.close()
 
                 if (code != 200) {
+                    Log.e("GeminiBridge", "Error response: $response")
                     val err = JSONObject(response).optJSONObject("error")?.optString("message") ?: response
                     return JSONObject().put("error", err).toString()
                 }
@@ -92,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
                 JSONObject().put("text", text).toString()
             } catch (e: Exception) {
+                Log.e("GeminiBridge", "Exception in callGemini", e)
                 JSONObject().put("error", e.message ?: "Network error").toString()
             }
         }

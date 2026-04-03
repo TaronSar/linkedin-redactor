@@ -3,19 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LinkedIn Redactor</title>
+  <title>LinkedUp</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0A66C2">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||
+    (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    document.documentElement.setAttribute('data-theme',t)})();
+  </script>
 </head>
 <body>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
+
   <!-- Onboarding Screen -->
   <div id="onboarding" class="screen">
     <div class="onboarding-card">
-      <div class="logo">LR</div>
-      <h1>LinkedIn Redactor</h1>
+      <div class="logo">LU</div>
+      <h1>LinkedUp</h1>
       <p class="tagline">Turn your achievements into LinkedIn gold</p>
 
       <div class="why-section">
@@ -66,17 +73,27 @@
   <div id="app" class="screen hidden">
     <div class="container">
       <header>
-        <h1>LinkedIn Redactor</h1>
+        <h1>LinkedUp</h1>
         <p class="subtitle">Turn your achievements into LinkedIn gold</p>
       </header>
 
       <main>
-        <label for="achievement">What did you achieve?</label>
+        <div class="mode-selector">
+          <span class="mode-label">Mode:</span>
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="write">Write New</button>
+            <button class="mode-btn" data-mode="improve">Improve Draft</button>
+          </div>
+        </div>
+
+        <label id="input-label" for="achievement">What did you achieve?</label>
         <textarea
           id="achievement"
           rows="4"
           placeholder="e.g. fixed a bug in our api, got promoted, shipped a new feature, learned Python..."
         ></textarea>
+
+        <div id="templates" class="template-chips"></div>
 
         <div class="tone-selector">
           <span class="tone-label">Tone:</span>
@@ -101,12 +118,21 @@
         <button id="generate-btn" class="primary-btn">Redact for LinkedIn</button>
 
         <div id="result" class="result hidden">
-          <div id="output" class="output-card"></div>
-          <button id="copy-btn" class="secondary-btn">Copy to Clipboard</button>
+          <div id="variant-tabs" class="variant-tabs"></div>
+          <div id="variant-panels" class="variant-panels"></div>
         </div>
 
         <div id="error" class="error hidden"></div>
       </main>
+
+      <div id="history-section" class="history-section">
+        <div class="history-header">
+          <h2 class="history-title">Post History</h2>
+          <button id="clear-history-btn" class="clear-history-btn hidden">Clear All</button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+        <p id="history-empty" class="history-empty">No posts generated yet.</p>
+      </div>
 
       <button id="settings-btn" class="settings-link">Change API key</button>
     </div>
